@@ -638,18 +638,18 @@ onMounted(() => {
           </div>
 
           <div class="checksum-row">
-            <span><strong>Papyrus.exe:</strong> CAE7BBF62DDBE091F64C3EBD9937104B43E04949FC655E865D636BF5058ED04A</span>
-            <button class="checksum-copy-btn" @click="copyChecksum('CAE7BBF62DDBE091F64C3EBD9937104B43E04949FC655E865D636BF5058ED04A')">Sao chép</button>
+            <span><strong>Papyrus.exe:</strong> B31335BB684E0F1A60EB3EB9890ABD52377664F483817F2346D4F7ED0BCDAD38</span>
+            <button class="checksum-copy-btn" @click="copyChecksum('B31335BB684E0F1A60EB3EB9890ABD52377664F483817F2346D4F7ED0BCDAD38')">Sao chép</button>
           </div>
 
           <div class="checksum-row">
-            <span><strong>Papyrus-v0.3.7-x64.msi:</strong> EC6901381F9DE23D1E5BE6702D3436B4D21D2BD357BFAA51015186DB69E253F9</span>
-            <button class="checksum-copy-btn" @click="copyChecksum('EC6901381F9DE23D1E5BE6702D3436B4D21D2BD357BFAA51015186DB69E253F9')">Sao chép</button>
+            <span><strong>Papyrus-v0.3.7-x64.msi:</strong> F8E6578EA2733A6F67A815DD88A057C7C8EA3C91D742D4E690351E60012A20B2</span>
+            <button class="checksum-copy-btn" @click="copyChecksum('F8E6578EA2733A6F67A815DD88A057C7C8EA3C91D742D4E690351E60012A20B2')">Sao chép</button>
           </div>
 
           <div class="checksum-row">
-            <span><strong>Papyrus-v0.3.7-windows-x64.zip:</strong> E0770CC3787DE2C5C8A45355DAB0213906515692D8A24949EE98DD0648B1A18E</span>
-            <button class="checksum-copy-btn" @click="copyChecksum('E0770CC3787DE2C5C8A45355DAB0213906515692D8A24949EE98DD0648B1A18E')">Sao chép</button>
+            <span><strong>Papyrus-v0.3.7-windows-x64.zip:</strong> 9D60998E669821BA72AA14803DFCA34C052DA765C17CE63D417D6B850F8B6EFD</span>
+            <button class="checksum-copy-btn" @click="copyChecksum('9D60998E669821BA72AA14803DFCA34C052DA765C17CE63D417D6B850F8B6EFD')">Sao chép</button>
           </div>
         </div>
       </div>
