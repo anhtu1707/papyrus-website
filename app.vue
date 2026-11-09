@@ -62,6 +62,22 @@ const showToast = (msg: string) => {
   }, 3000)
 }
 
+// Bless Modal State
+const showBlessModal = ref(false)
+const copiedStk = ref(false)
+
+const copyStk = (stk: string) => {
+  if (typeof navigator !== 'undefined' && navigator.clipboard) {
+    navigator.clipboard.writeText(stk).then(() => {
+      copiedStk.value = true
+      showToast('Đã sao chép số tài khoản ACB 16601281!')
+      setTimeout(() => { copiedStk.value = false }, 3000)
+    }).catch(() => {
+      showToast('STK ACB: ' + stk)
+    })
+  }
+}
+
 const copyChecksum = (val: string) => {
   if (typeof navigator !== 'undefined' && navigator.clipboard) {
     navigator.clipboard.writeText(val).then(() => {
@@ -129,6 +145,12 @@ onMounted(() => {
             <svg v-else width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
             </svg>
+          </button>
+          <button class="btn btn-outline-bless btn-sm" @click="showBlessModal = true" title="Ban phước / Ủng hộ dự án">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+            Ban phước
           </button>
           <a href="#download" class="btn btn-primary btn-sm">Tải Papyrus</a>
         </div>
@@ -686,6 +708,7 @@ onMounted(() => {
               <li><a href="/SHA256SUMS.txt" target="_blank">Mã SHA-256</a></li>
               <li><a href="https://developer.microsoft.com/microsoft-edge/webview2/" target="_blank" rel="noopener">WebView2 Runtime</a></li>
               <li><a href="#faq">Hỏi đáp (FAQ)</a></li>
+              <li><a href="#" @click.prevent="showBlessModal = true">Ban phước / Ủng hộ</a></li>
             </ul>
           </div>
 
@@ -706,6 +729,61 @@ onMounted(() => {
         </div>
       </div>
     </footer>
+
+    <!-- Popup Ban Phước -->
+    <transition name="modal-fade">
+      <div v-if="showBlessModal" class="modal-backdrop" @click.self="showBlessModal = false" role="dialog" aria-modal="true" aria-labelledby="bless-title">
+        <div class="bless-modal">
+          <button class="modal-close-btn" @click="showBlessModal = false" aria-label="Đóng">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+
+          <div class="bless-modal-header">
+            <div class="bless-icon-wrapper">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+            </div>
+            <h3 id="bless-title">Ban Phước & Đồng Hành Cùng Papyrus</h3>
+            <p class="bless-subtitle">Sự khích lệ và đồng hành của bạn giúp dự án duy trì độc lập, bảo mật và phát triển hoàn toàn miễn phí cho cộng đồng.</p>
+          </div>
+
+          <div class="bless-qr-card">
+            <div class="qr-img-box">
+              <img
+                src="https://img.vietqr.io/image/ACB-16601281-compact2.png?amount=0&addInfo=Ban%20phuoc%20Papyrus&accountName=ACB%2016601281"
+                alt="Mã VietQR ACB STK 16601281"
+                class="vietqr-img"
+                loading="lazy"
+              />
+            </div>
+            <div class="qr-details">
+              <div class="detail-item">
+                <span class="detail-label">Ngân hàng:</span>
+                <span class="detail-value">ACB (Ngân hàng TMCP Á Châu)</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Số tài khoản:</span>
+                <span class="detail-value highlight-stk">16601281</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Nội dung chuyển:</span>
+                <span class="detail-value">Ban phuoc Papyrus</span>
+              </div>
+              <button class="btn btn-primary btn-copy-stk" @click="copyStk('16601281')">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                {{ copiedStk ? 'Đã sao chép STK!' : 'Sao chép STK: 16601281' }}
+              </button>
+            </div>
+          </div>
+
+          <div class="bless-modal-footer">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            <span>Mọi sự ủng hộ đều được trân trọng để duy trì máy chủ &amp; phát triển phiên bản mới.</span>
+          </div>
+        </div>
+      </div>
+    </transition>
 
     <!-- Toast Notification -->
     <div class="toast" :class="{ show: toastVisible }">
@@ -1784,4 +1862,192 @@ body {
   transform: rotate(180deg);
 }
 
+
+/* Bless Modal & Button Styles */
+.btn-outline-bless {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  color: var(--accent);
+  border: 1.5px solid var(--accent);
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-outline-bless:hover {
+  background: var(--accent);
+  color: #fff;
+  transform: translateY(-1px);
+}
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.bless-modal {
+  position: relative;
+  background: var(--paper);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  max-width: 520px;
+  width: 100%;
+  padding: 32px 28px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  box-sizing: border-box;
+}
+.modal-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.modal-close-btn:hover {
+  background: var(--border-light);
+  color: var(--text);
+}
+.bless-modal-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+.bless-icon-wrapper {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(140, 105, 65, 0.12);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+}
+.bless-modal-header h3 {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.bless-subtitle {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  margin: 0 auto;
+  max-width: 440px;
+}
+.bless-qr-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.qr-img-box {
+  flex-shrink: 0;
+  width: 140px;
+  height: 140px;
+  background: #fff;
+  border-radius: 8px;
+  padding: 6px;
+  border: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.vietqr-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.qr-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
+}
+.detail-label {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+.detail-value {
+  color: var(--text);
+  font-weight: 500;
+}
+.detail-value.highlight-stk {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.5px;
+}
+.btn-copy-stk {
+  margin-top: 6px;
+  padding: 8px 14px;
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-radius: var(--radius-sm);
+}
+.bless-modal-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.4;
+  border-top: 1px dashed var(--border-light);
+  padding-top: 14px;
+}
+.bless-modal-footer svg {
+  flex-shrink: 0;
+  color: var(--accent);
+}
+.modal-fade-enter-active, .modal-fade-leave-active {
+  transition: opacity 0.25s ease;
+}
+.modal-fade-enter-from, .modal-fade-leave-to {
+  opacity: 0;
+}
+@media (max-width: 600px) {
+  .bless-qr-card {
+    flex-direction: column;
+    text-align: center;
+  }
+  .qr-img-box {
+    margin: 0 auto;
+    width: 150px;
+    height: 150px;
+  }
+  .btn-copy-stk {
+    width: 100%;
+  }
+}
 </style>
