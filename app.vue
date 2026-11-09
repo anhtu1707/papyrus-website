@@ -666,51 +666,51 @@ onMounted(() => {
 
         <div class="faq-list">
           <div class="faq-item" :class="{ open: openFaqIndex === 0 }">
-            <div class="faq-question" @click="toggleFaq(0)">
+            <div class="faq-question" @click="toggleFaq(0)" :aria-expanded="openFaqIndex === 0">
               <span>1. Máy tính của tôi cần điều kiện gì để chạy được Papyrus?</span>
               <span class="faq-chevron"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg></span>
             </div>
-            <div class="faq-answer">
+            <div v-show="openFaqIndex === 0" class="faq-answer">
               Papyrus yêu cầu hệ điều hành Windows 10 (bản 1809 trở lên) hoặc Windows 11 kiến trúc 64-bit. Ngoài ra, máy tính cần có Microsoft Edge WebView2 Evergreen Runtime (đã được cài sẵn trên hầu hết các máy Windows 10/11 hiện nay). Nếu bạn dùng gói cài đặt MSI, trình cài đặt sẽ tự động kiểm tra và hướng dẫn cài đặt nếu máy bạn chưa có.
             </div>
           </div>
 
           <div class="faq-item" :class="{ open: openFaqIndex === 1 }">
-            <div class="faq-question" @click="toggleFaq(1)">
+            <div class="faq-question" @click="toggleFaq(1)" :aria-expanded="openFaqIndex === 1">
               <span>2. Papyrus có lưu trữ hoặc gửi lịch sử duyệt web của tôi lên mạng không?</span>
               <span class="faq-chevron"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg></span>
             </div>
-            <div class="faq-answer">
+            <div v-show="openFaqIndex === 1" class="faq-answer">
               Tuyệt đối không! Papyrus hoạt động theo tôn chỉ bảo mật không đám mây (Zero-Cloud). Mọi dữ liệu về mật khẩu, dấu trang, lịch sử duyệt web và cấu hình cá nhân đều được lưu cục bộ trên ổ cứng máy tính của bạn tại thư mục hồ sơ riêng biệt. Không có bất kỳ telemetry hay mã thu thập dữ liệu ngầm nào được nhúng vào ứng dụng.
             </div>
           </div>
 
           <div class="faq-item" :class="{ open: openFaqIndex === 2 }">
-            <div class="faq-question" @click="toggleFaq(2)">
+            <div class="faq-question" @click="toggleFaq(2)" :aria-expanded="openFaqIndex === 2">
               <span>3. Làm thế nào để đặt Papyrus làm trình duyệt mặc định trên Windows?</span>
               <span class="faq-chevron"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg></span>
             </div>
-            <div class="faq-answer">
+            <div v-show="openFaqIndex === 2" class="faq-answer">
               Rất đơn giản! Trong giao diện Papyrus, bạn hãy bấm vào nút ba chấm (Cài đặt) &gt; chọn mục <strong>Chung &amp; Khởi động</strong> &gt; nhấn nút <strong>"Đặt làm mặc định"</strong>. Papyrus sẽ tự động đăng ký giao thức hệ thống trong Windows Registry (HKCU StartMenuInternet) và mở trang Windows Default Apps để bạn xác nhận chỉ với 1 cú click.
             </div>
           </div>
 
           <div class="faq-item" :class="{ open: openFaqIndex === 3 }">
-            <div class="faq-question" @click="toggleFaq(3)">
+            <div class="faq-question" @click="toggleFaq(3)" :aria-expanded="openFaqIndex === 3">
               <span>4. Tôi có thể cài các tiện ích mở rộng (Extensions) như uBlock Origin hay Dark Reader không?</span>
               <span class="faq-chevron"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg></span>
             </div>
-            <div class="faq-answer">
+            <div v-show="openFaqIndex === 3" class="faq-answer">
               Papyrus đã tích hợp sẵn bộ lọc quy tắc chặn quảng cáo của Brave và EasyList trực tiếp vào lõi xử lý, đồng thời hỗ trợ chế độ nền giấy dịu mắt và chế độ tối (Dark Mode). Trong trang Cài đặt &gt; Tiện ích, Papyrus cung cấp liên kết truy cập nhanh đến Chrome Web Store và Edge Add-ons để bạn tham khảo các tiện ích hữu ích.
             </div>
           </div>
 
           <div class="faq-item" :class="{ open: openFaqIndex === 4 }">
-            <div class="faq-question" @click="toggleFaq(4)">
+            <div class="faq-question" @click="toggleFaq(4)" :aria-expanded="openFaqIndex === 4">
               <span>5. Papyrus có khôi phục lại các trang khi máy tính bị sập nguồn không?</span>
               <span class="faq-chevron"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg></span>
             </div>
-            <div class="faq-answer">
+            <div v-show="openFaqIndex === 4" class="faq-answer">
               Có! Papyrus duy trì một cơ chế ghi nhận cờ phiên an toàn. Nếu trình duyệt bị đóng bất thường (do mất điện, tắt nóng hoặc lỗi hệ thống), ở lần khởi động kế tiếp, Papyrus sẽ tự động kích hoạt tính năng khôi phục toàn bộ các địa chỉ trang web đang mở để bạn tiếp tục công việc dở dang.
             </div>
           </div>
@@ -1759,17 +1759,30 @@ body {
 .faq-question:hover {
   color: var(--accent);
 }
+.faq-item.open {
+  border-color: var(--accent);
+  box-shadow: 0 4px 16px rgba(140, 105, 65, 0.08);
+}
 .faq-chevron {
-  transition: transform 0.25s ease;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .faq-item.open .faq-chevron {
   transform: rotate(180deg);
 }
 .faq-answer {
+  display: none;
   padding: 0 24px 20px;
   font-size: 14.5px;
   color: var(--text-muted);
   line-height: 1.65;
+  animation: fadeInFaq 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.faq-item.open .faq-answer {
+  display: block;
+}
+@keyframes fadeInFaq {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* Footer */
