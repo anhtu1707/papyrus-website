@@ -732,7 +732,7 @@ onMounted(() => {
 
     <!-- Popup Ban Phước -->
     <transition name="modal-fade">
-      <div v-if="showBlessModal" class="modal-backdrop" @click.self="showBlessModal = false" role="dialog" aria-modal="true" aria-labelledby="bless-title">
+      <div v-show="showBlessModal" class="modal-backdrop" @click.self="showBlessModal = false" role="dialog" aria-modal="true" aria-labelledby="bless-title">
         <div class="bless-modal">
           <button class="modal-close-btn" @click="showBlessModal = false" aria-label="Đóng">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
