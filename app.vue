@@ -62,6 +62,15 @@ const showToast = (msg: string) => {
   }, 3000)
 }
 
+// Mobile Menu State
+const isMobileMenuOpen = ref(false)
+const toggleMobileMenu = () => {
+  isMobileMenuOpen.value = !isMobileMenuOpen.value
+}
+const closeMobileMenu = () => {
+  isMobileMenuOpen.value = false
+}
+
 // Bless Modal State
 const showBlessModal = ref(false)
 const copiedStk = ref(false)
@@ -151,10 +160,53 @@ onMounted(() => {
             </svg>
             Ban phước
           </button>
-          <a href="#download" class="btn btn-primary btn-sm">Tải Papyrus</a>
+          <a href="#download" class="btn btn-primary btn-sm nav-download-btn">Tải Papyrus</a>
+          <button class="mobile-menu-toggle" @click="toggleMobileMenu" aria-label="Menu" :aria-expanded="isMobileMenuOpen">
+            <svg v-if="!isMobileMenuOpen" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            <svg v-else width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
         </div>
       </div>
     </header>
+
+    <!-- Mobile Nav Drawer -->
+    <transition name="mobile-menu-slide">
+      <div v-show="isMobileMenuOpen" class="mobile-nav-drawer" @click="closeMobileMenu">
+        <div class="mobile-nav-inner" @click.stop>
+          <nav class="mobile-nav-links">
+            <a href="#features" @click="closeMobileMenu">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+              Tính năng cốt lõi
+            </a>
+            <a href="#architecture" @click="closeMobileMenu">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+              Kiến trúc Rust
+            </a>
+            <a href="#comparison" @click="closeMobileMenu">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+              So sánh hiệu năng
+            </a>
+            <a href="#download" @click="closeMobileMenu">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              Trung tâm tải về
+            </a>
+            <a href="#faq" @click="closeMobileMenu">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+              Câu hỏi thường gặp
+            </a>
+            <a href="#" @click.prevent="showBlessModal = true; closeMobileMenu()" class="highlight-bless">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+              Ban phước / Ủng hộ (ACB 16601281)
+            </a>
+          </nav>
+          <div class="mobile-nav-cta">
+            <a href="#download" class="btn btn-primary btn-block" @click="closeMobileMenu">
+              Tải Papyrus Miễn Phí (v0.3.7)
+            </a>
+          </div>
+        </div>
+      </div>
+    </transition>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -444,6 +496,10 @@ onMounted(() => {
           <p class="section-desc">Cùng so sánh các yếu tố cốt lõi về độ tiêu hao tài nguyên và tính riêng tư của bạn.</p>
         </div>
 
+        <div class="table-scroll-hint">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          Vuốt ngang để xem toàn bộ bảng đối chiếu
+        </div>
         <div class="comparison-wrapper">
           <table class="comp-table">
             <thead>
@@ -1789,22 +1845,218 @@ body {
   transform: translateY(0);
 }
 
-/* Responsive */
-@media (max-width: 992px) {
-  .hero h1 { font-size: 42px; }
-  .features-grid, .download-cards { grid-template-columns: repeat(2, 1fr); }
-  .stats-bar { grid-template-columns: repeat(2, 1fr); gap: 24px; }
-  .arch-grid { grid-template-columns: 1fr; }
-  .footer-grid { grid-template-columns: 1fr 1fr; }
+/* Global Viewport Overflow Fix */
+html, body {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  position: relative;
 }
-@media (max-width: 768px) {
-  .hero h1 { font-size: 34px; }
+.papyrus-app {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Mobile Hamburger Menu */
+.mobile-menu-toggle {
+  display: none;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  transition: var(--transition);
+}
+.mobile-menu-toggle:hover {
+  background: var(--surface);
+  border-color: var(--accent);
+}
+.mobile-nav-drawer {
+  position: fixed;
+  inset: 0;
+  top: 72px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+}
+[data-theme="dark"] .mobile-nav-drawer {
+  background: rgba(0, 0, 0, 0.7);
+}
+.mobile-nav-inner {
+  background: var(--paper);
+  border-bottom: 1px solid var(--border);
+  padding: 20px 24px 28px;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.18);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: slideDownMenu 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes slideDownMenu {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.mobile-nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.mobile-nav-links a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+}
+.mobile-nav-links a:hover, .mobile-nav-links a:active {
+  background: var(--card-bg);
+  color: var(--accent);
+}
+.mobile-nav-links a svg {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.mobile-nav-links a.highlight-bless {
+  color: var(--accent);
+  font-weight: 600;
+  background: rgba(140, 105, 65, 0.08);
+}
+.mobile-nav-cta {
+  padding-top: 8px;
+  border-top: 1px dashed var(--border-light);
+}
+.btn-block {
+  width: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+.mobile-menu-slide-enter-active, .mobile-menu-slide-leave-active {
+  transition: opacity 0.2s ease;
+}
+.mobile-menu-slide-enter-from, .mobile-menu-slide-leave-to {
+  opacity: 0;
+}
+
+/* Table Scroll Hint */
+.table-scroll-hint {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 12.5px;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  padding: 6px 12px;
+  background: var(--card-bg);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light);
+}
+.table-scroll-hint svg {
+  color: var(--accent);
+}
+
+/* Comprehensive Responsive Breakpoints */
+@media (max-width: 992px) {
   .nav-links { display: none; }
+  .mobile-menu-toggle { display: flex; }
+  .hero h1 { font-size: clamp(32px, 5vw, 44px); }
+  .features-grid, .download-cards { grid-template-columns: repeat(2, 1fr); }
+  .stats-bar { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .arch-grid { grid-template-columns: 1fr; gap: 32px; }
+  .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 36px; }
+}
+
+@media (max-width: 768px) {
+  .section { padding: 56px 0; }
+  .download-section { padding: 56px 0; }
+  .section-title { font-size: 26px; }
+  .section-desc { font-size: 14px; margin-bottom: 28px; }
+  .nav-inner { height: 60px; }
+  .mobile-nav-drawer { top: 60px; }
+  .brand-logo-svg { width: 32px; height: 32px; }
+  .brand-name { font-size: 20px; }
+  .hero { padding: 48px 0 36px; }
+  .hero h1 { font-size: clamp(26px, 6.5vw, 34px); line-height: 1.25; }
+  .hero p.lead { font-size: 14.5px; margin-bottom: 24px; }
+  
   .features-grid, .download-cards { grid-template-columns: 1fr; }
   .download-card.featured { transform: none; }
-  .mock-tabs { max-width: calc(100% - 140px); }
-  .footer-grid { grid-template-columns: 1fr; }
+  .feature-card, .arch-card { padding: 24px 20px; }
+  .table-scroll-hint { display: flex; }
+  .comparison-wrapper { width: 100%; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .comp-table { min-width: 580px; }
+  .comp-table th, .comp-table td { padding: 12px 14px; font-size: 13.5px; }
+
+  /* Browser Mockup Mobile */
+  .preview-wrapper { max-width: 100%; }
+  .mock-topbar { height: 36px; padding: 2px 6px 0; }
+  .mock-brand { font-size: 11px; padding: 0 4px 6px 2px; }
+  .mock-tabs { max-width: calc(100% - 50px); overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .mock-tabs::-webkit-scrollbar { display: none; }
+  .mock-tab { padding: 0 8px; font-size: 11.5px; height: 28px; max-width: 110px; flex-shrink: 0; }
+  .mock-tab span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .mock-window-btns { display: none; }
+  .mock-toolbar { height: 38px; padding: 0 8px; gap: 6px; }
+  .mock-omnibox { padding: 3px 8px; font-size: 11.5px; }
+  .mock-shield-btn span { display: none; }
+  .mock-shield-btn { padding: 4px 6px; }
+  .mock-page { padding: 20px 12px; min-height: 260px; }
+
+  /* Checksums Box Mobile */
+  .checksums-box { padding: 18px 14px; }
+  .checksums-header { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .checksum-row { flex-direction: column; align-items: stretch; gap: 8px; padding: 12px; }
+  .checksum-row span { font-size: 11.5px; line-height: 1.5; word-break: break-all; }
+  .checksum-copy-btn { width: 100%; text-align: center; padding: 8px 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; }
+
+  .footer-grid { grid-template-columns: 1fr; gap: 28px; }
   .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+}
+
+@media (max-width: 640px) {
+  .hero-cta { flex-direction: column; width: 100%; gap: 12px; }
+  .hero-cta .btn { width: 100%; justify-content: center; padding: 14px 20px; font-size: 15px; }
+  .hero-meta { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 10px 16px; font-size: 12px; margin-bottom: 28px; }
+}
+
+@media (max-width: 480px) {
+  .container { padding: 0 16px; }
+  .nav-inner { height: 56px; }
+  .mobile-nav-drawer { top: 56px; }
+  .brand-logo-svg { width: 28px; height: 28px; }
+  .brand-name { font-size: 18px; }
+  .btn-outline-bless span { display: none; }
+  .btn-outline-bless { padding: 6px 8px; gap: 0; }
+  .nav-download-btn { padding: 6px 10px; font-size: 12px; }
+  .nav-actions { gap: 8px; }
+
+  .stats-bar { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 14px 10px; }
+  .stat-number { font-size: 24px; }
+  .stat-label { font-size: 11px; }
+
+  .faq-question { font-size: 14px; padding: 14px 16px; }
+  .faq-answer { font-size: 13px; padding: 0 16px 16px; }
+
+  .bless-modal { padding: 20px 14px; max-width: calc(100vw - 24px); }
+  .bless-modal-header h3 { font-size: 18px; }
+  .bless-subtitle { font-size: 12.5px; }
+  .qr-img-box { width: 130px; height: 130px; }
+  .detail-value.highlight-stk { font-size: 16px; }
 }
 
 .meta-check-icon {
