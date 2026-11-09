@@ -118,7 +118,6 @@ onMounted(() => {
             </defs>
           </svg>
           <span class="brand-name">Papyrus</span>
-          <span class="brand-version">v0.3.7</span>
         </a>
 
         <nav class="nav-links">
@@ -160,12 +159,6 @@ onMounted(() => {
     <!-- Hero Section -->
     <section class="hero">
       <div class="container">
-        <div class="hero-badge">
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8">
-            <path d="M8 1.5l2 4.2 4.5.6-3.3 3.2.8 4.5-4-2.2-4 2.2.8-4.5L1.5 6.3l4.5-.6L8 1.5z"/>
-          </svg>
-          Bản phát hành Nuxt 3 — Hoàn thiện Font Tiếng Việt chuẩn Be Vietnam Pro
-        </div>
 
         <h1>
           Trình duyệt web cho Windows.<br>
